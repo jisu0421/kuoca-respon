@@ -1,0 +1,1198 @@
+@charset "utf-8";
+
+/* ================= Reset / Common ================= */
+
+*, *:after, *:before {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+   
+}
+
+body {
+    color: #162331;
+    background: #f4efe8;
+    font-family: Arial, "Noto Sans KR", sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul,
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    width: 100%;
+    display: block;
+}
+
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.pc-section {
+    min-width: 1024px;
+    max-width: 1920px;
+    width: 100%;
+    
+    margin: 0 auto;
+    overflow-x: hidden;
+}
+
+.pc-main {
+    position: relative;
+    width: 100%;
+    background: #f4efe8;
+    overflow-x: hidden;
+}
+
+
+
+
+/* ================= Header ================= */
+
+.pc-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 88px;
+
+    z-index: 1200;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,.55),
+        rgba(0,0,0,.25),
+        transparent
+    );
+
+    transition: .3s ease;
+}
+
+.pc-header.scrolled {
+    background: rgba(8, 20, 31, .92);
+    backdrop-filter: blur(10px);
+}
+
+.pc-top {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 0 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pc-menu-btn {
+    position: relative;
+    z-index: 1200;
+
+    width: 36px;
+    height: 28px;
+
+    padding: 0;
+}
+
+.pc-menu-btn span {
+    position: absolute;
+    left: 0;
+
+    width: 36px;
+    height: 2px;
+
+    background: #fff;
+
+    transition: .3s;
+}
+
+.pc-menu-btn span:nth-child(1) {
+    top: 2px;
+}
+
+.pc-menu-btn span:nth-child(2) {
+    top: 13px;
+}
+
+.pc-menu-btn span:nth-child(3) {
+    bottom: 2px;
+}
+
+.pc-menu-btn.active span:nth-child(1) {
+    transform: translateY(11px) rotate(45deg);
+}
+
+.pc-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.pc-menu-btn.active span:nth-child(3) {
+    transform: translateY(-11px) rotate(-45deg);
+}
+
+.pc-logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    margin: 0;
+
+    transform: translate(-50%, -50%);
+}
+
+.pc-logo a {
+    position: relative;
+    display: block;
+
+    width: 170px;
+    height: 60px;
+}
+
+.pc-logo img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 170px;
+
+    transform: translate(-50%, -50%);
+}
+
+.pc-nav ul {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.pc-nav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+}
+
+.pc-nav img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+
+/* ================= Side Menu ================= */
+
+.pc-menu-overlay {
+    position: fixed;
+    inset: 0;
+
+    z-index: 1050;
+
+    background: rgba(0, 0, 0, .45);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: .3s ease;
+}
+
+.pc-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.pc-side-menu {
+    position: fixed;
+    top: 0;
+    left: -380px;
+
+    z-index: 1100;
+
+    width: 360px;
+    height: 100vh;
+
+    padding: 120px 42px;
+
+    background: #071827;
+
+    transition: .35s ease;
+}
+
+.pc-side-menu.active {
+    left: 0;
+}
+
+.pc-side-menu:before {
+    content: "New&Best\A Perfume\A Hand\A Lip\A Body\A Skin\A Home\A Gift-Set\A Store";
+    white-space: pre-line;
+
+    display: block;
+
+    color: #fff;
+    font-size: 18px;
+    line-height: 2.4;
+    letter-spacing: .5px;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+
+/* ================= Hero ================= */
+/* sticky 사용 안 함. JS + fixed 방식으로 메인배너를 뒤에 고정 */
+
+.pc-hero-slider {
+    position: fixed;
+    top: 0;
+    left: 50%;
+
+    z-index: 1;
+
+    width: 100%;
+    max-width: 1920px;
+    height: 100vh;
+    min-height: 720px;
+
+    overflow: hidden;
+
+    background: #071520;
+
+    transform: translateX(-50%);
+    transform-origin: center center;
+
+    /* 인트로가 덮을 때 스르륵 줄어들고 어두워지는 전환 */
+    transition: opacity .25s ease,
+                transform 1s ease,
+                filter 1s ease;
+}
+
+/*
+   인트로가 덮어 올라올 때 hero 전체를 어둡게 감싸는
+   그라디언트 오버레이 (평소엔 투명)
+*/
+.pc-hero-slider:after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 15;
+
+    background: linear-gradient(
+        to top,
+        rgba(7, 21, 32, .96),
+        rgba(7, 21, 32, .45) 45%,
+        rgba(7, 21, 32, 0)
+    );
+
+    opacity: 0;
+
+    transition: opacity 1s ease;
+
+    pointer-events: none;
+}
+
+/* 스크롤로 인트로가 덮이기 시작하면 추가되는 상태 */
+.pc-hero-slider.dimmed {
+    transform: translateX(-50%) scale(.94);
+    filter: brightness(.55);
+}
+
+.pc-hero-slider.dimmed:after {
+    opacity: 1;
+}
+
+.pc-hero-slide {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+}
+
+.pc-hero-slide.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.pc-hero-img {
+    width: 100%;
+    height: 100%;
+}
+
+.pc-hero-img img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+}
+
+.pc-hero-content {
+    position: absolute;
+    left: 80px;
+    top: 50%;
+
+    z-index: 5;
+
+    color: #fff;
+
+    transform: translateY(-35%);
+}
+
+.pc-hero-category {
+    display: block;
+
+    margin-bottom: 18px;
+
+    font-size: 13px;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+}
+
+.pc-hero-title {
+    margin: 0 0 28px;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.pc-hero-desc {
+    margin: 0 0 34px;
+
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.pc-hero-btn {
+    position: relative;
+
+    display: inline-block;
+
+    padding-bottom: 9px;
+
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.pc-hero-btn:after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 140px;
+    height: 1px;
+
+    background: #fff;
+}
+
+.pc-hero-prev,
+.pc-hero-next {
+    position: absolute;
+    top: 52%;
+
+    z-index: 20;
+
+    width: 26px;
+    height: 46px;
+
+    padding: 0;
+
+    transform: translateY(-50%);
+}
+
+.pc-hero-prev {
+    left: 26px;
+}
+
+.pc-hero-next {
+    right: 26px;
+}
+
+.pc-hero-prev img,
+.pc-hero-next img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.pc-hero-pagination {
+    position: absolute;
+    left: 50%;
+    bottom: 28px;
+
+    z-index: 20;
+
+    display: flex;
+    gap: 10px;
+
+    transform: translateX(-50%);
+}
+
+.pc-hero-pagination span {
+    width: 14px;
+    height: 14px;
+
+    border: 1px solid #fff;
+    border-radius: 50%;
+
+    cursor: pointer;
+}
+
+.pc-hero-pagination span.active {
+    background: #fff;
+}
+
+
+/* ================= Intro : Hero 위로 덮고 올라오는 섹션 ================= */
+
+.pc-intro {
+    position: relative;
+
+    z-index: 20;
+
+    width: 100%;
+    height: 100vh;
+    min-height: 720px;
+
+    display: flex;
+
+    /*
+       핵심:
+       hero가 fixed라서 공간을 차지하지 않음.
+       그래서 intro를 처음엔 화면 아래에 위치시키기 위해 100vh 만큼 내림.
+    */
+    margin-top: 100vh;
+
+    opacity: 1;
+    transform: none;
+
+    background: #f3eee7;
+
+    overflow: visible;
+
+    box-shadow: none;
+
+    transition: box-shadow .6s ease;
+}
+
+.pc-intro.show {
+    box-shadow: 0 -40px 80px rgba(0, 0, 0, .35);
+}
+
+.pc-intro:before {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    top: -120px;
+
+    z-index: 30;
+
+    width: 100%;
+    height: 120px;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(243, 238, 231, 0),
+        rgba(243, 238, 231, .55) 55%,
+        rgba(243, 238, 231, .98)
+    );
+
+    opacity: 0;
+    transition: opacity .6s ease;
+
+    pointer-events: none;
+}
+
+.pc-intro.show:before {
+    opacity: 1;
+}
+
+.pc-intro-video {
+    position: relative;
+
+    width: 66.666%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #111;
+}
+
+.pc-intro-video video {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    filter: none;
+}
+
+.pc-play-btn {
+    display: none;
+}
+
+.pc-video-controls {
+    position: absolute;
+    left: 36px;
+    bottom: 36px;
+
+    z-index: 30;
+
+    display: flex;
+    gap: 10px;
+}
+
+.pc-video-controls button {
+    min-width: 74px;
+    height: 34px;
+
+    padding: 0 18px;
+
+    border: 1px solid rgba(255, 255, 255, .9);
+
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: .8px;
+
+    background: rgba(0, 0, 0, .18);
+    backdrop-filter: blur(8px);
+
+    transition: .3s ease;
+}
+
+.pc-video-controls button:hover,
+.pc-video-controls button.active {
+    color: #071827;
+    background: #fff;
+}
+
+.pc-intro-product {
+    position: relative;
+
+    width: 33.334%;
+    height: 100%;
+
+    padding: 80px 64px;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    background: #f8f3ec;
+}
+
+.pc-intro-product span {
+    margin-bottom: 18px;
+
+    font-size: 14px;
+    letter-spacing: .4px;
+}
+
+.pc-intro-product h2 {
+    margin: 0 0 12px;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 74px;
+    font-weight: 400;
+    line-height: 1;
+
+    color: #142536;
+}
+
+.pc-intro-product strong {
+    margin-bottom: 26px;
+
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.pc-intro-product p {
+    margin: 0 0 34px;
+
+    font-size: 15px;
+    line-height: 1.9;
+
+    color: #333;
+}
+
+.pc-intro-product a {
+    position: relative;
+
+    display: inline-block;
+
+    padding-bottom: 9px;
+
+    font-size: 14px;
+}
+
+.pc-intro-product a:after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 126px;
+    height: 1px;
+
+    background: #222;
+}
+
+.pc-intro-product span,
+.pc-intro-product h2,
+.pc-intro-product strong,
+.pc-intro-product p,
+.pc-intro-product a {
+    position: relative;
+    z-index: 3;
+}
+
+.pc-intro-deco {
+    position: absolute;
+    right: -58px;
+    bottom: -80px;
+
+    z-index: 1;
+
+    width: 280px;
+
+    opacity: .22;
+
+    animation: pcFloat 4.5s ease-in-out infinite;
+}
+
+.pc-intro-deco img {
+    width: 100%;
+    height: auto;
+
+    object-fit: contain;
+}
+
+@keyframes pcFloat {
+    0% {
+        transform: translateY(0) rotate(-4deg);
+    }
+
+    50% {
+        transform: translateY(-18px) rotate(2deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(-4deg);
+    }
+}
+
+
+/* ================= Best Sellers ================= */
+
+.pc-feature-products {
+    position: relative;
+
+    z-index: 20;
+
+    width: 100%;
+
+    padding: 40px 64px 70px;
+
+    background: #f4efe8;
+}
+
+.pc-feature-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+}
+
+.pc-feature-title h2 {
+    margin: 0;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: .5px;
+}
+
+.pc-feature-title a {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/*
+   섹션 전체 높이를 666px → 940px 로 키워서
+   포스터/제품 사진이 원본 비율에 가깝게 들어가도록 함
+*/
+.pc-feature-inner {
+    display: grid;
+    grid-template-columns: 1.05fr 1.25fr;
+    gap: 22px;
+
+    width: 100%;
+    height: 940px;
+}
+
+.pc-feature-large {
+    position: relative;
+
+    width: 100%;
+    height: 940px;
+
+    overflow: hidden;
+
+    background: #081625;
+}
+
+.pc-feature-large:after,
+.pc-product-card:after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,.62),
+        rgba(0,0,0,.1),
+        transparent
+    );
+
+    pointer-events: none;
+}
+
+.pc-feature-large img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+}
+
+.pc-feature-large-text {
+    position: absolute;
+    left: 28px;
+    bottom: 34px;
+
+    z-index: 5;
+
+    color: #fff;
+}
+
+.pc-feature-large-text h3 {
+    margin: 0 0 16px;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 38px;
+    font-weight: 400;
+}
+
+.pc-feature-large-text p {
+    margin: 0 0 7px;
+    padding: 0;
+
+    font-size: 15px;
+
+    color: #fff;
+}
+
+.pc-feature-large-text strong {
+    display: block;
+
+    margin-bottom: 28px;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.pc-feature-large-text a {
+    position: relative;
+
+    display: inline-block;
+
+    padding-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.pc-feature-large-text a:after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 104px;
+    height: 1px;
+
+    background: #fff;
+}
+
+.pc-product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 22px;
+
+    width: 100%;
+    height: 940px;
+}
+
+.pc-product-card {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+
+    background: #111;
+}
+
+.pc-product-card > img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+}
+
+.pc-product-card .pc-product-hover {
+    position: absolute;
+    inset: 0;
+
+    z-index: 2;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    opacity: 0;
+
+    transform: scale(1.04);
+
+    transition: opacity .55s ease, transform .55s ease;
+}
+
+.pc-product-card:hover .pc-product-hover {
+    opacity: .7;
+    transform: scale(1);
+}
+
+.pc-product-card:after {
+    z-index: 4;
+}
+
+.pc-product-card div {
+    position: absolute;
+    left: 20px;
+    bottom: 22px;
+
+    z-index: 5;
+
+    color: #fff;
+}
+
+.pc-product-card h3 {
+    margin: 0 0 4px;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.pc-product-card p {
+    margin: 0 0 4px;
+    padding: 0;
+
+    font-size: 14px;
+
+    color: #fff;
+}
+
+.pc-product-card strong {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* ================= Campaign ================= */
+
+
+
+.pc-campaign {
+    position: relative;
+
+    z-index: 20;
+
+    clear: both;
+
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2078 / 757;   /* 기존 height: 350px 대신 */
+
+    overflow: hidden;
+
+    background: #111;
+}
+
+.pc-campaign img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+}
+
+.pc-campaign:after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: rgba(0,0,0,.18);
+
+    pointer-events: none;
+}
+
+.pc-campaign-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    z-index: 5;
+
+    color: #fff;
+    text-align: center;
+
+    transform: translate(-50%, -50%);
+}
+
+.pc-campaign-text span {
+    display: block;
+
+    margin-bottom: 12px;
+
+    font-size: 13px;
+}
+
+.pc-campaign-text h2 {
+    margin: 0 0 10px;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 44px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.pc-campaign-text p {
+    margin: 0 0 20px;
+
+    font-size: 15px;
+}
+
+.pc-campaign-text a {
+    position: relative;
+
+    display: inline-block;
+
+    padding-bottom: 8px;
+
+    font-size: 13px;
+}
+
+.pc-campaign-text a:after {
+    content: "";
+
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+
+    width: 110px;
+    height: 1px;
+
+    background: #fff;
+
+    transform: translateX(-50%);
+}
+
+
+/* ================= Benefit ================= */
+
+.pc-benefit {
+    position: relative;
+    z-index: 20;
+
+    width: 100%;
+
+    padding: 32px 70px;
+
+    background: #f7f2eb;
+
+    border-bottom: 1px solid rgba(0,0,0,.08);
+}
+
+.pc-benefit ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+}
+
+.pc-benefit li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.pc-benefit img {
+    width: 38px;
+    height: 38px;
+
+    object-fit: contain;
+}
+
+.pc-benefit strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.pc-benefit p {
+    margin: 0;
+
+    font-size: 12px;
+
+    color: #333;
+}
+
+
+/* ================= Footer ================= */
+
+.pc-footer {
+    position: relative;
+    z-index: 20;
+
+    width: 100%;
+
+    padding: 46px 0 0;
+
+    background: #071827;
+    color: #fff;
+}
+
+.pc-footer-top {
+    width: 88%;
+
+    margin: 0 auto;
+    padding-bottom: 42px;
+
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1.35fr 1.55fr 1fr;
+    gap: 44px;
+}
+
+.pc-footer-brand h2 {
+    margin: 0 0 8px;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.pc-footer-brand p {
+    margin: 0 0 28px;
+
+    font-size: 12px;
+
+    color: rgba(255,255,255,.8);
+}
+
+.pc-footer-top h3 {
+    margin: 0 0 24px;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.pc-chat {
+    font-size: 12px;
+    line-height: 1.75;
+
+    color: rgba(255,255,255,.78);
+}
+
+.pc-sns {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.pc-sns img {
+    width: 28px;
+    height: 28px;
+
+    object-fit: contain;
+
+    filter: brightness(0) invert(1);
+}
+
+.pc-copy-right {
+    width: 88%;
+
+    margin: 0 auto;
+    padding: 0 0 28px;
+}
+
+.pc-copy-right p {
+    margin: 0;
+
+    font-size: 11px;
+
+    color: rgba(255,255,255,.65);
+}
